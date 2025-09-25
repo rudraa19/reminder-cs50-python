@@ -5,6 +5,8 @@ from utils.create_task import create_task
 st.set_page_config(page_title="Reminder App")
 st.title("📝 Reminder App")
 
+st.markdown("---")
+
 with st.expander("Add New Task"):
     with st.form(key="add_task_form"):
         title = st.text_input("Task Title")
