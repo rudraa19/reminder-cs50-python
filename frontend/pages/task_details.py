@@ -1,6 +1,10 @@
 import streamlit as st
 from utils.get_task import get_task
 from utils.update_task import update_task
+from utils.delete_task import delete_task
+
+def navigate(page_name):
+    st.session_state.page = page_name
 
 st.set_page_config(page_title="Task Details")
 st.title("📄 Task Details")
@@ -13,7 +17,7 @@ st.markdown("---")
 
 st.markdown(
     """
-    <a href="./">&larr; Back</a>
+    <a href="/" target="_self">&larr; Back</a>
     """,
     unsafe_allow_html=True
 )
@@ -42,25 +46,7 @@ with st.form(key="update_task_form"):
         st.session_state.tasks = get_task(task_id)
         st.success("Task updated successfully!")
 
-
-delete_html = """
-<div class="delete-button">
-    <button>Delete task</button>
-</div>
-<style>
-.delete-button button {
-    background-color: #ff4b4b;
-    color: white;
-    border-radius: 5px;
-    padding: 0.5em 1em;
-    font-weight: bold;
-    border: none;
-}
-.delete-button button:hover {
-    background-color: #ff1a1a;
-    color: white;
-}
-</style>
-"""
-
-st.markdown(delete_html, unsafe_allow_html=True)
+if st.button("Delete task"):
+    if delete_task(task_id):
+        st.success("Task deleted successfully!")
+        st.markdown('You can now <a href="/" target="_self">Go back</a>', unsafe_allow_html=True)
