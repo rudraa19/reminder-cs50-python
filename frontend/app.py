@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from config import BACKEND_URL
 
 st.set_page_config(page_title="Reminder App")
 st.title("📝 Reminder App")
@@ -11,7 +12,30 @@ def get_tasks():
         {"id": 2, "title": "Call Mom", "desc": "Check in and chat", "due_date": "2025-09-26", "is_completed": True},
     ]
 
-tasks = get_tasks()
+with st.expander("Add New Task"):
+    with st.form(key="add_task_form"):
+        title = st.text_input("Task Title")
+        desc = st.text_area("Task Description")
+        due_date = st.date_input("Due Date")
+        is_completed = st.checkbox("Completed")
+        submit = st.form_submit_button("Add Task")
+
+        if submit:
+            new_task = {
+                "id": len(st.session_state.tasks) + 1,
+                "title": title,
+                "desc": desc,
+                "due_date": due_date.strftime("%Y-%m-%d"),
+                "is_completed": is_completed
+            }
+            st.session_state.tasks.append(new_task)
+            st.success(f"Task '{title}' added successfully!")
+            st.rerun()
+
+if "tasks" not in st.session_state:
+    st.session_state.tasks = get_tasks()
+
+tasks = st.session_state.tasks
 
 if tasks:
     col1, col2, col3, col4, col5 = st.columns([1, 3, 2, 1, 1])
