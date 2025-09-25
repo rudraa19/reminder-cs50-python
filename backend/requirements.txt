@@ -1,0 +1,6 @@
+fastapi[standard]
+SQLAlchemy
+python-dotenv
+psycopg2-binary
+scalar_fastapi
+requests
