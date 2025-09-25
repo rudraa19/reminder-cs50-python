@@ -5,6 +5,16 @@ from utils.create_task import create_task
 st.set_page_config(page_title="Reminder App")
 st.title("📝 Reminder App")
 
+hide_sidebar = """
+    <style>
+        /* Hide the sidebar */
+        [data-testid="stSidebar"] {display: none;}
+        /* Expand the main content to full width */
+        [data-testid="stAppViewContainer"] {margin-left: 0;}
+    </style>
+"""
+st.markdown(hide_sidebar, unsafe_allow_html=True)
+
 st.markdown("---")
 
 with st.expander("Add New Task"):
