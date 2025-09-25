@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.get_tasks import get_tasks
+from utils.create_task import create_task
 
 st.set_page_config(page_title="Reminder App")
 st.title("📝 Reminder App")
@@ -11,18 +12,23 @@ with st.expander("Add New Task"):
         due_date = st.date_input("Due Date")
         is_completed = st.checkbox("Completed")
         submit = st.form_submit_button("Add Task")
+   
+    if submit:
+        new_task = {
+            "title": title,
+            "desc": desc,
+            "due_date": due_date.strftime("%Y-%m-%d"),
+            "is_completed": is_completed
+        }
+        create_task(
+            title=new_task["title"],
+            desc=new_task["desc"],
+            due_date=new_task["due_date"],
+            is_completed=new_task["is_completed"]
+        )
+        st.session_state.tasks = get_tasks()
+        st.success("Task added successfully!")
 
-        if submit:
-            new_task = {
-                "id": len(st.session_state.tasks) + 1,
-                "title": title,
-                "desc": desc,
-                "due_date": due_date.strftime("%Y-%m-%d"),
-                "is_completed": is_completed
-            }
-            st.session_state.tasks.append(new_task)
-            st.success(f"Task '{title}' added successfully!")
-            st.rerun()
 
 if "tasks" not in st.session_state:
     st.session_state.tasks = get_tasks()
