@@ -4,3 +4,4 @@ import os
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+NTFY_ID = os.getenv("NTFY_ID")
