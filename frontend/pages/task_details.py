@@ -9,6 +9,17 @@ def navigate(page_name):
 st.set_page_config(page_title="Task Details")
 st.title("📄 Task Details")
 
+hide_sidebar = """
+    <style>
+        /* Hide the sidebar */
+        [data-testid="stSidebar"] {display: none;}
+        /* Expand the main content to full width */
+        [data-testid="stAppViewContainer"] {margin-left: 0;}
+    </style>
+"""
+st.markdown(hide_sidebar, unsafe_allow_html=True)
+
+
 task_id = st.query_params["task_id"]
 
 task = get_task(task_id)
